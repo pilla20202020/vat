@@ -41,10 +41,12 @@
                         </div>
                     </div>
 
-                    <input id="thumbnail" class="form-control" type="text" name="setting[image]" readonly>
+                    {{-- Upload for filemanager --}}
+
+                    {{-- <input id="thumbnail" class="form-control" type="text" name="setting[image]" readonly>
                     <button id="lfm" data-input="thumbnail" data-preview="holder" class="btn btn-icon icon-left btn-primary mt-2">
                         <i class="fa fa-upload"></i> &nbsp;Choose
-                    </button>
+                    </button> --}}
 
                 </div>
             </div>

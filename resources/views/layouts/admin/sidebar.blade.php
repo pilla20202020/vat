@@ -26,6 +26,35 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="{{route('vendors.index')}}" class="waves-effect">
+                        <i class="fa fa-industry"></i>
+                        <span>Vendor</span>
+                    </a>
+                </li>
+
+
+                <li>
+                    <a href="{{route('seller.index')}}" class="waves-effect">
+                        <i class="fa fa-store"></i>
+                        <span>Seller</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('product-category.index')}}" class="waves-effect">
+                        <i class="fa fa-store"></i>
+                        <span>Product Category</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('product.index')}}" class="waves-effect">
+                        <i class="fa fa-store"></i>
+                        <span>Product</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
         <!-- Sidebar -->

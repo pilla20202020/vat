@@ -1,5 +1,6 @@
 <?php
 
+use App\Modules\Models\Setting\Setting;
 use App\Modules\Models\Country\Country;
 use App\Modules\Models\District\District;
 use App\Modules\Models\Province\Province;
@@ -216,4 +217,12 @@ function getPrimaryNotifiableUsers()
 {
     $users = User::role('SuperAdmin')->get();
     return $users;
+}
+
+// Setting Fetch
+function setting($query)
+{
+    $setting = Setting::fetch($query)->first();
+
+    return $setting ? $setting->value : null;
 }

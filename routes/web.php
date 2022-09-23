@@ -98,5 +98,74 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::post('districts', 'Common\CommonController@getDistrictsByProvinceId')->name('district.provinceId');
     });
 
+    Route::get('setting', 'Setting\SettingController@index')->name('setting.index');
+    Route::put('setting/update', 'Setting\SettingController@update')->name('setting.update');
+
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Vendor CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'vendors.', 'prefix' => 'vendors',], function () {
+        Route::get('', 'Vendor\VendorController@index')->name('index');
+        Route::get('create', 'Vendor\VendorController@create')->name('create');
+        Route::post('', 'Vendor\VendorController@store')->name('store');
+        Route::get('{vendors}/edit', 'Vendor\VendorController@edit')->name('edit');
+        Route::put('{vendors}', 'Vendor\VendorController@update')->name('update');
+        Route::get('vendors/{id}/destroy', 'Vendor\VendorController@destroy')->name('destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Seller CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'seller.', 'prefix' => 'seller',], function () {
+        Route::get('', 'Seller\SellerController@index')->name('index');
+        Route::get('create', 'Seller\SellerController@create')->name('create');
+        Route::post('', 'Seller\SellerController@store')->name('store');
+        Route::get('{seller}/edit', 'Seller\SellerController@edit')->name('edit');
+        Route::put('{seller}', 'Seller\SellerController@update')->name('update');
+        Route::get('seller/{id}/destroy', 'Seller\SellerController@destroy')->name('destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | ProductCategory CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'product-category.', 'prefix' => 'product-category',], function () {
+        Route::get('', 'ProductCategory\ProductCategoryController@index')->name('index');
+        Route::get('create', 'ProductCategory\ProductCategoryController@create')->name('create');
+        Route::post('', 'ProductCategory\ProductCategoryController@store')->name('store');
+        Route::get('{productcategory}/edit', 'ProductCategory\ProductCategoryController@edit')->name('edit');
+        Route::put('{productcategory}', 'ProductCategory\ProductCategoryController@update')->name('update');
+        Route::get('productcategory/{id}/destroy', 'ProductCategory\ProductCategoryController@destroy')->name('destroy');
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Product CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'product.', 'prefix' => 'product',], function () {
+        Route::get('', 'Product\ProductController@index')->name('index');
+        Route::get('create', 'Product\ProductController@create')->name('create');
+        Route::post('', 'Product\ProductController@store')->name('store');
+        Route::get('{product}/edit', 'Product\ProductController@edit')->name('edit');
+        Route::put('{product}', 'Product\ProductController@update')->name('update');
+        Route::get('product/{id}/destroy', 'Product\ProductController@destroy')->name('destroy');
+    });
 
 });

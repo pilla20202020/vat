@@ -105,7 +105,7 @@ class ProductCategoryController extends Controller
         //
         $productcategory = $this->productcategory->where('id',$id);
         $productcategory->delete();
-        Toastr()->success('Product Deleted Successfully','Success');
+        Toastr()->success('Product Category Deleted Successfully','Success');
         return redirect()->route('product-category.index');
     }
 }

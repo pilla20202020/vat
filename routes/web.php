@@ -168,4 +168,37 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('product/{id}/destroy', 'Product\ProductController@destroy')->name('destroy');
     });
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | ServiceCategory CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'service-category.', 'prefix' => 'service-category',], function () {
+        Route::get('', 'ServiceCategory\ServiceCategoryController@index')->name('index');
+        Route::get('create', 'ServiceCategory\ServiceCategoryController@create')->name('create');
+        Route::post('', 'ServiceCategory\ServiceCategoryController@store')->name('store');
+        Route::get('{servicecategory}/edit', 'ServiceCategory\ServiceCategoryController@edit')->name('edit');
+        Route::put('{servicecategory}', 'ServiceCategory\ServiceCategoryController@update')->name('update');
+        Route::get('servicecategory/{id}/destroy', 'ServiceCategory\ServiceCategoryController@destroy')->name('destroy');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Service CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'service.', 'prefix' => 'service',], function () {
+        Route::get('', 'Service\ServiceController@index')->name('index');
+        Route::get('create', 'Service\ServiceController@create')->name('create');
+        Route::post('', 'Service\ServiceController@store')->name('store');
+        Route::get('{service}/edit', 'Service\ServiceController@edit')->name('edit');
+        Route::put('{service}', 'Service\ServiceController@update')->name('update');
+        Route::get('service/{id}/destroy', 'Service\ServiceController@destroy')->name('destroy');
+    });
+
 });

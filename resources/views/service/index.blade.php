@@ -6,17 +6,17 @@
     <link rel="stylesheet" href="{{ asset('css/lightbox.css') }}"/>
 @endsection
 
-@section('title', 'Product List')
+@section('title', 'Service List')
 
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="d-flex">
-                <header class="text-capitalize pt-1">Product List</header>
+                <header class="text-capitalize pt-1">Service List</header>
                 <div class="tools ml-auto">
-                    <a class="btn btn-primary ink-reaction" href="{{ route('product.create') }}">
+                    <a class="btn btn-primary ink-reaction" href="{{ route('service.create') }}">
                         <i class="md md-add"></i>
-                        Add Product
+                        Add Service
                     </a>
                 </div>
             </div>
@@ -27,12 +27,12 @@
                         <tr>
                             <th>S.No.</th>
                             <th>Name</th>
-                            <th>Product Category</th>
+                            <th>Service Category</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @each('product.partials.table', $products, 'product')
+                            @each('service.partials.table', $services, 'service')
                         </tbody>
 
                     </table>

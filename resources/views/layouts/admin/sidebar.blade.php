@@ -55,6 +55,20 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{route('service-category.index')}}" class="waves-effect">
+                        <i class="fa fa-store"></i>
+                        <span>Service Category</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('service.index')}}" class="waves-effect">
+                        <i class="fa fa-store"></i>
+                        <span>Service</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
         <!-- Sidebar -->

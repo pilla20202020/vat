@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Product;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Product\ProductRequest;
 use App\Modules\Models\Product\Product;
 use App\Modules\Models\ProductCategory\ProductCategory;
 use Illuminate\Http\Request;
@@ -47,9 +48,12 @@ class ProductController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(ProductRequest $request)
     {
         //
+        $product = $this->product->create($request->data());
+        Toastr()->success('Product Created Successfully','Success');
+        return redirect()->route('product.index');
     }
 
     /**
@@ -72,6 +76,9 @@ class ProductController extends Controller
     public function edit($id)
     {
         //
+        $product = $this->product->where('id',$id)->first();
+        $productcategories = $this->productcategory->all();
+        return view('product.edit', compact('product','productcategories'));
     }
 
     /**
@@ -81,9 +88,15 @@ class ProductController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(ProductRequest $request, $id)
     {
         //
+
+        $product = $this->product->where('id',$id);
+        if($product->update($request->data())) {
+            Toastr()->success('Product Updated Successfully','Success');
+            return redirect()->route('product.index');
+        }
     }
 
     /**
@@ -95,5 +108,9 @@ class ProductController extends Controller
     public function destroy($id)
     {
         //
+        $product = $this->product->where('id',$id);
+        $product->delete();
+        Toastr()->success('Product Deleted Successfully','Success');
+        return redirect()->route('product.index');
     }
 }

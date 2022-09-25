@@ -1,6 +1,7 @@
 <tr>
     <td>{{++$key}}</td>
     <td>{{ Str::limit($product->name, 47) }}</td>
+    <td>{{ Str::limit($product->productcategory->name, 47) }}</td>
     <td>
         <a href="{{route('product.edit', $product->id)}}"  class="btn btn-icon-toggle btn-sm" title="edit">
             <i class="mdi mdi-pencil"></i>

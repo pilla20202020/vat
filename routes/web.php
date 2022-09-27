@@ -236,4 +236,19 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('customer/{id}/destroy', 'Customer\CustomerController@destroy')->name('destroy');
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Transaction CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'transaction.', 'prefix' => 'transaction',], function () {
+        Route::get('joborder', 'Transaction\TransactionController@jobOrder')->name('joborder');
+        Route::post('storejoborder', 'Customer\CustomerController@storeJobOrder')->name('storejoborder');
+        Route::get('{customer}/edit', 'Customer\CustomerController@edit')->name('edit');
+        Route::put('{customer}', 'Customer\CustomerController@update')->name('update');
+        Route::get('customer/{id}/destroy', 'Customer\CustomerController@destroy')->name('destroy');
+    });
+
 });

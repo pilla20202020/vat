@@ -69,6 +69,20 @@
                     </a>
                 </li>
 
+                <li>
+                    <a href="{{route('company.index')}}" class="waves-effect">
+                        <i class="fa fa-store"></i>
+                        <span>Company</span>
+                    </a>
+                </li>
+
+                <li>
+                    <a href="{{route('customer.index')}}" class="waves-effect">
+                        <i class="fa fa-store"></i>
+                        <span>Clients/Customer</span>
+                    </a>
+                </li>
+
             </ul>
         </div>
         <!-- Sidebar -->

@@ -19,7 +19,6 @@ class CreateStockLocationsTable extends Migration
             $table->foreign('product_id')->references('id')->on('tbl_products')->onUpdate('cascade')->onDelete('cascade');
             $table->text('location')->nullable();
             $table->text('description')->nullable();
-
             $table->timestamps();
         });
     }

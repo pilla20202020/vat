@@ -201,4 +201,39 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('service/{id}/destroy', 'Service\ServiceController@destroy')->name('destroy');
     });
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Company CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'company.', 'prefix' => 'company',], function () {
+        Route::get('', 'Company\CompanyController@index')->name('index');
+        Route::get('create', 'Company\CompanyController@create')->name('create');
+        Route::post('', 'Company\CompanyController@store')->name('store');
+        Route::get('{company}/edit', 'Company\CompanyController@edit')->name('edit');
+        Route::put('{company}', 'Company\CompanyController@update')->name('update');
+        Route::get('company/{id}/destroy', 'Company\CompanyController@destroy')->name('destroy');
+        Route::post('company/storeBranches','Company\CompanyController@storeBranches')->name('store_branches');
+        Route::get('getbranches', 'Company\CompanyController@getBranches')->name('getbranches');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Client CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'customer.', 'prefix' => 'customer',], function () {
+        Route::get('', 'Customer\CustomerController@index')->name('index');
+        Route::get('create', 'Customer\CustomerController@create')->name('create');
+        Route::post('', 'Customer\CustomerController@store')->name('store');
+        Route::get('{customer}/edit', 'Customer\CustomerController@edit')->name('edit');
+        Route::put('{customer}', 'Customer\CustomerController@update')->name('update');
+        Route::get('customer/{id}/destroy', 'Customer\CustomerController@destroy')->name('destroy');
+    });
+
 });

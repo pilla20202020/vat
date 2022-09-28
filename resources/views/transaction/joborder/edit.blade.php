@@ -5,15 +5,15 @@
     <link href="{{ asset('resources/css/bootstrap-toggle.min.css') }}" rel="stylesheet">
 @endsection
 
-@section('title',$seller->name)
+@section('title',$joborder->invoice)
 
 @section('content')
     <section>
         <div class="section-body">
-            <form class="form form-validate floating-label" action="{{route('seller.update',$seller->id)}}"
+            <form class="form form-validate floating-label" action="{{route('joborder.update',$joborder->id)}}"
                   method="POST" enctype="multipart/form-data" novalidate>
             @method('PUT')
-            @include('seller.partials.form', ['header' => 'Edit seller <span class="text-primary">('.($seller->name).')</span>'])
+            @include('transaction.joborder.partials.form', ['header' => 'Edit Job order <span class="text-primary">('.($joborder->invoice).')</span>'])
             </form>
         </div>
     </section>

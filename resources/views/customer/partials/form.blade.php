@@ -57,7 +57,7 @@
                             <div class="form-group ">
                                 <label for="address" class="col-form-label pt-0">Address</label>
                                 <div class="">
-                                    <input class="form-control" type="number" name="address" data-role="tagsinput"
+                                    <input class="form-control" type="text" name="address" data-role="tagsinput"
                                     value="{{ old('address', isset($customer->address) ? $customer->address : '') }}" placeholder="Enter a Address" required>
                                 </div>
                             </div>

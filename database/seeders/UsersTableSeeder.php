@@ -25,5 +25,13 @@ class UsersTableSeeder extends Seeder
             'status' => 'active',
         ]);
         $user->assignRole('SuperAdmin');
+
+        $prajwal = User::Create([
+            'name'=>'Prajwal',
+            'email'=>'prajwalbro@hotmail.com',
+            'password'=>Hash::make('p@ssw0rd'),
+            'status' => 'active',
+        ]);
+        $prajwal->assignRole('SuperAdmin');
     }
 }

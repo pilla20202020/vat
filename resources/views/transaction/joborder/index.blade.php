@@ -6,17 +6,17 @@
     <link rel="stylesheet" href="{{ asset('css/lightbox.css') }}"/>
 @endsection
 
-@section('title', 'Seller List')
+@section('title', 'Job Order List')
 
 @section('content')
     <div class="row">
         <div class="col-12">
             <div class="d-flex">
-                <header class="text-capitalize pt-1">Seller List</header>
+                <header class="text-capitalize pt-1">Job Order List</header>
                 <div class="tools ml-auto">
-                    <a class="btn btn-primary ink-reaction" href="{{ route('seller.create') }}">
+                    <a class="btn btn-primary ink-reaction" href="{{ route('joborder.create') }}">
                         <i class="md md-add"></i>
-                        Add Seller
+                        Create Job Order
                     </a>
                 </div>
             </div>
@@ -26,15 +26,14 @@
                         <thead>
                         <tr>
                             <th>S.No.</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Address</th>
+                            <th>Customer/Clients</th>
+                            <th>Invoice</th>
+                            <th>Invoice Date</th>
                             <th>Actions</th>
                         </tr>
                         </thead>
                         <tbody>
-                            @each('seller.partials.table', $sellers, 'seller')
+                            @each('transaction.joborder.partials.table', $joborders, 'joborder')
                         </tbody>
 
                     </table>

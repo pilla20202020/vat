@@ -238,17 +238,38 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
 
     /*
     |--------------------------------------------------------------------------
-    | Transaction CRUD
+    | JobOrder CRUD
     |--------------------------------------------------------------------------
     |
     */
 
-    Route::group(['as' => 'transaction.', 'prefix' => 'transaction',], function () {
-        Route::get('joborder', 'Transaction\TransactionController@jobOrder')->name('joborder');
-        Route::post('storejoborder', 'Customer\CustomerController@storeJobOrder')->name('storejoborder');
-        Route::get('{customer}/edit', 'Customer\CustomerController@edit')->name('edit');
-        Route::put('{customer}', 'Customer\CustomerController@update')->name('update');
-        Route::get('customer/{id}/destroy', 'Customer\CustomerController@destroy')->name('destroy');
+    Route::group(['as' => 'joborder.', 'prefix' => 'joborder',], function () {
+        Route::get('', 'JobOrder\JobOrderController@index')->name('index');
+        Route::get('create', 'JobOrder\JobOrderController@create')->name('create');
+        Route::post('', 'JobOrder\JobOrderController@store')->name('store');
+        Route::get('{joborder}/edit', 'JobOrder\JobOrderController@edit')->name('edit');
+        Route::put('{joborder}', 'JobOrder\JobOrderController@update')->name('update');
+        Route::get('joborder/{id}/destroy', 'JobOrder\JobOrderController@destroy')->name('destroy');
+
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Billing Advice CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'billingadvice.', 'prefix' => 'billingadvice',], function () {
+        Route::get('', 'BillingAdvice\BillingAdviceController@index')->name('index');
+        Route::get('create', 'BillingAdvice\BillingAdviceController@create')->name('create');
+        Route::get('getjoborder', 'BillingAdvice\BillingAdviceController@getJoborder')->name('getjoborder');
+        Route::post('', 'BillingAdvice\BillingAdviceController@store')->name('store');
+        Route::get('{billingadvice}/edit', 'BillingAdvice\BillingAdviceController@edit')->name('edit');
+        Route::put('{billingadvice}', 'BillingAdvice\BillingAdviceController@update')->name('update');
+        Route::get('billingadvice/{id}/destroy', 'BillingAdvice\BillingAdviceController@destroy')->name('destroy');
+        Route::get('getjoborder', 'BillingAdvice\BillingAdviceController@getJobOrder')->name('getjoborder');
     });
 
 });

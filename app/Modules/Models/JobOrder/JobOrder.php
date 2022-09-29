@@ -17,6 +17,7 @@ class JobOrder extends Model
         'customer_id',
         'invoice',
         'order_date',
+        'is_billingadvice',
     ];
 
     public function customer() {

@@ -11,9 +11,8 @@
 @section('content')
     <section>
         <div class="section-body">
-            <form class="form form-validate floating-label" action="{{ route('billingadvice.store') }}" method="POST"
+            <form class="form form-validate floating-label" action="{{ route('billingadvice.getjoborder') }}" method="GET"
                 enctype="multipart/form-data">
-                @csrf
                 <div class="row">
                     <div class="col-sm-9">
                         <div class="card">
@@ -26,7 +25,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group ">
                                                 <label for="name" class="col-form-label pt-0">Select
-                                                    Job Order</label>
+                                                    Job Order (Invoice)</label>
                                                 <select class="select2 mb-3 select2-multiple select_job_order"
                                                     style="width: 100%" data-placeholder="Choose Job Order"
                                                     name="joborder_id">
@@ -38,17 +37,50 @@
                                                 </select>
                                             </div>
                                         </div>
+
+                                        <div class="col-sm-6 mt-4">
+                                            <div class="form-group">
+                                                <div>
+                                                    <input type="submit" name="pageSubmit"
+                                                        class="btn btn-danger waves-effect waves-light" value="Submit">
+                                                </div>
+                                            </div>
+                                        </div>
                                     </div>
                                     <hr>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <form class="form form-validate floating-label" action="{{ route('billingadvice.store') }}" method="POST"
+                enctype="multipart/form-data">
+                @csrf
+                <div class="row">
+                    <div class="col-sm-9">
+                        <div class="card">
+                            <div class="card-underline">
+                                <div class="card-body">
+                                    <input type="hidden" name="joborder_id" value="{{$joborder->id}}">
                                     <h5>View Product/Service</h5>
+                                    <div class="form-group row d-flex align-items-end">
+                                        <div class="col-sm-6">
+                                            <label for="invoice" class="col-form-label pt-0">Billing Advice Date</label>
+                                            <div class="">
+                                                <input class="form-control" type="date" required name="billing_advice_date"
+                                                    value=""
+                                                    placeholder="Enter Billing Advice Date" required>
+                                            </div>
+                                        </div>
+                                    </div>
                                     @if(isset($joborder->orderDetails) && $joborder->orderDetails->isEmpty() == false)
                                         @foreach ($joborder->orderDetails as $key => $detail)
                                             <div class="form-group row d-flex align-items-end">.
                                                 <div class="col-sm-3">
                                                     <label for="name" class="col-form-label pt-0">Components</label>
                                                     <input type="text" readonly name="product_id[]" value="@if($detail->type == "product")  {{$detail->product($detail->product_id)->name}} @else {{$detail->service($detail->product_id)->name}} @endif" class="form-control change_status_commission">
-                                                    
-
                                                 </div>
 
                                                 <div class="col-sm-2">
@@ -82,7 +114,7 @@
                                                     <i class="md md-arrow-back"></i>
                                                     Back
                                                 </a>
-                                                <input type="submit" name="pageSubmit" class="btn btn-danger waves-effect waves-light" value="Submit">
+                                                <input type="submit" name="pageSubmit" class="btn btn-danger waves-effect waves-light" value="Generate Billing Advice">
                                             </div>
                                         </div>
                                     </div>

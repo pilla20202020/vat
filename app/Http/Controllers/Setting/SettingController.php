@@ -78,8 +78,6 @@ class SettingController extends Controller
                 'slug' => $slug
             ]);
 
-            $this->uploadRequestImage($request, $setting, $setting['main_image']);
-
             if ($setting)
             {
                 $setting->update(['value' => $value]);

@@ -250,7 +250,7 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('{joborder}/edit', 'JobOrder\JobOrderController@edit')->name('edit');
         Route::put('{joborder}', 'JobOrder\JobOrderController@update')->name('update');
         Route::get('joborder/{id}/destroy', 'JobOrder\JobOrderController@destroy')->name('destroy');
-
+        Route::get('/{id}/delete-joborder-detail','JobOrder\JobOrderController@deleteJobOrderDetailDelete')->name('jobdetail_delete');
     });
 
 
@@ -270,6 +270,8 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::put('{billingadvice}', 'BillingAdvice\BillingAdviceController@update')->name('update');
         Route::get('billingadvice/{id}/destroy', 'BillingAdvice\BillingAdviceController@destroy')->name('destroy');
         Route::get('getjoborder', 'BillingAdvice\BillingAdviceController@getJobOrder')->name('getjoborder');
+        Route::get('/print/{id}', 'BillingAdvice\BillingAdviceController@print')->name('print');
+        Route::get('updatestatus', 'BillingAdvice\BillingAdviceController@updateStatus')->name('updatestatus');
     });
 
 });

@@ -99,9 +99,9 @@
                                         <input type="number" name="price[]" value="{{$detail->price}}" class="form-control" required>
                                     </div>
 
-                                    {{-- <div class="col-md-1" style="margin-top: 45px;">
-                                        <a href="{{route('checkin.bill_delete',$bill->id)}}" class="btn btn-sm btn-danger mr-1" type="submit" value="">Remove row</a>
-                                    </div> --}}
+                                    <div class="col-md-1" style="margin-top: 45px;">
+                                        <a href="{{route('joborder.jobdetail_delete',$detail->id)}}" class="btn btn-sm btn-danger mr-1" type="submit" value="">Remove row</a>
+                                    </div>
                                 </div>
                             @endforeach
                             <hr>

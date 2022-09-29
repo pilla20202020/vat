@@ -14,14 +14,15 @@ use Illuminate\Support\Facades\DB;
 
 class JobOrderController extends Controller
 {
-    protected $customer, $product, $service, $joborder;
+    protected $customer, $product, $service, $joborder, $joborderdetail;
 
-    function __construct(Customer $customer, Product $product, Service $service, JobOrder $joborder)
+    function __construct(Customer $customer, Product $product, Service $service, JobOrder $joborder, JobOrderDetail $joborderdetail)
     {
         $this->customer = $customer;
         $this->product = $product;
         $this->service = $service;
         $this->joborder = $joborder;
+        $this->joborderdetail = $joborderdetail;
     }
     /**
      * Display a listing of the resource.
@@ -186,5 +187,17 @@ class JobOrderController extends Controller
         $joborder->delete();
         Toastr()->success('Job Order Deleted Successfully','Success');
         return redirect()->route('joborder.index');
+    }
+
+    public function deleteJobOrderDetailDelete($id) {
+        $joborderdetail = $this->joborderdetail->where('id',$id);
+        if($joborderdetail->delete()) {
+            Toastr()->success('Joborder detail deleted successfully','Success');
+            return redirect()->back();
+        }
+        else {
+            Toastr()->success('Bill cannot be deleted at the moment','Error');
+            return redirect()->back();
+        }
     }
 }

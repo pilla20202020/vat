@@ -25,7 +25,7 @@
                                         <div class="col-sm-6">
                                             <div class="form-group ">
                                                 <label for="name" class="col-form-label pt-0">Select
-                                                    Job Order</label>
+                                                    Job Order (Invoice)</label>
                                                 <select class="select2 mb-3 select2-multiple select_job_order"
                                                     style="width: 100%" data-placeholder="Choose Job Order"
                                                     name="joborder_id">

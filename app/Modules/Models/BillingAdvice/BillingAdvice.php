@@ -2,6 +2,7 @@
 
 namespace App\Modules\Models\BillingAdvice;
 
+use App\Modules\Models\JobOrder\JobOrder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -13,7 +14,13 @@ class BillingAdvice extends Model
 
     protected $fillable = [
         'joborder_id',
-        'billing_advice_date'
+        'billing_advice_date',
+        'is_accepted',
+        'remarks',
     ];
+
+    public function joborder() {
+        return $this->belongsTo(JobOrder::class);
+    }
 
 }

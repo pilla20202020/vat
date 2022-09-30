@@ -92,7 +92,7 @@
                     <ul class="sub-menu mm-collapse" aria-expanded="true">
                         <li><a href="{{ route('joborder.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Job Orders</a></li>
                         <li><a href="{{ route('billingadvice.index')}}" aria-expanded="false"><i class="fa fa-tasks"></i> Billing Advice</a></li>
-                        <li><a href="{{ route('permission.index')}}" aria-expanded="false"><i class="fa fa-lock"></i> Draft Bill</a></li>
+                        <li><a href="{{ route('draftbill.index')}}" aria-expanded="false"><i class="fa fa-lock"></i> Draft Bill</a></li>
                     </ul>
                 </li>
 

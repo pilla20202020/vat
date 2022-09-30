@@ -274,4 +274,24 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('updatestatus', 'BillingAdvice\BillingAdviceController@updateStatus')->name('updatestatus');
     });
 
+    /*
+    |--------------------------------------------------------------------------
+    | Draft Bill CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'draftbill.', 'prefix' => 'draftbill',], function () {
+        Route::get('', 'DraftBill\DraftBillController@index')->name('index');
+        Route::get('create', 'DraftBill\DraftBillController@create')->name('create');
+        Route::get('getbillingadvice', 'DraftBill\DraftBillController@getBillingAdvice')->name('getbillingadvice');
+        Route::post('', 'DraftBill\DraftBillController@store')->name('store');
+        Route::get('{draftbill}/edit', 'DraftBill\DraftBillController@edit')->name('edit');
+        Route::put('{draftbill}', 'DraftBill\DraftBillController@update')->name('update');
+        Route::get('draftbill/{id}/destroy', 'DraftBill\DraftBillController@destroy')->name('destroy');
+        Route::get('getjoborder', 'DraftBill\DraftBillController@getJobOrder')->name('getjoborder');
+        Route::get('/print/{id}', 'DraftBill\DraftBillController@print')->name('print');
+        Route::get('updatestatus', 'DraftBill\DraftBillController@updateStatus')->name('updatestatus');
+    });
+
 });

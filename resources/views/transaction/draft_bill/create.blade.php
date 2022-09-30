@@ -11,14 +11,14 @@
 @section('content')
     <section>
         <div class="section-body">
-            <form class="form form-validate floating-label" action="{{ route('billingadvice.getjoborder') }}" method="GET"
+            <form class="form form-validate floating-label" action="{{ route('draftbill.getbillingadvice') }}" method="GET"
                 enctype="multipart/form-data">
                 <div class="row">
                     <div class="col-sm-9">
                         <div class="card">
                             <div class="card-underline">
                                 <div class="card-head">
-                                    <header class="ml-3 mt-2">Create Billing Advice</header>
+                                    <header class="ml-3 mt-2">Create Draft Bill</header>
                                 </div>
                                 <div class="card-body">
                                     <div class="row">
@@ -28,10 +28,10 @@
                                                     Job Order (Invoice)</label>
                                                 <select class="select2 mb-3 select2-multiple select_job_order"
                                                     style="width: 100%" data-placeholder="Choose Job Order"
-                                                    name="joborder_id">
+                                                    name="billingadvice_id">
                                                     <option value="" disabled selected> Select Job Order</option>
-                                                    @foreach ($joborders as $joborder)
-                                                        <option value="{{ $joborder->id }}">{{ $joborder->invoice }}
+                                                    @foreach ($billingadvices as $billingadvice)
+                                                        <option value="{{ $billingadvice->id }}">{{ $billingadvice->joborder->invoice }}
                                                         </option>
                                                     @endforeach
                                                 </select>

@@ -49,7 +49,7 @@ class DraftBillController extends Controller
     public function create()
     {
         //
-        $billingadvices = $this->billingadvice->where('is_accepted','accepted')->get();
+        $billingadvices = $this->billingadvice->where('is_accepted','accepted')->where('is_draftbill',null)->get();
         return view('transaction.draft_bill.create',compact('billingadvices'));
     }
 
@@ -92,13 +92,18 @@ class DraftBillController extends Controller
                     'draft_bill_date' => $data['draft_bill_date']
                 ];
                 $createdraftbill = $this->draftbill->create($draftbilldata);
-
+                $billingadvice = $this->billingadvice->where('id',$data['billingadvice_id']);
+                $billingadviceData = [
+                    'is_draftbill' => 1,
+                ];
+                $billingadvice->update($billingadviceData);
                 $p = 0;
                 foreach($data['component'] as $content) {   
                     $orderDetails = new DraftBillDetail();
                     $orderDetails['draftbill_id'] = $createdraftbill->id;
                     $orderDetails['component'] = $content;
                     $orderDetails['description'] = $data['description'][$p];
+                    $orderDetails['taxable_type'] = $data['taxable_type'][$p];
                     $orderDetails['price'] = $data['price'][$p];
                     if(isset($data['billed_for'.$p.''])) {
                         $result = collect($data['billed_for'.$p.'']);
@@ -159,5 +164,24 @@ class DraftBillController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function print($id) {
+        $draftbill = $this->draftbill->where('id',$id)->first();
+        $total_amount = $draftbill->draftDetails->sum('price');
+        return view('transaction.draft_bill.print',compact('draftbill','total_amount'));
+
+    }
+
+    public function updateStatus(Request $request) {
+        $draftbill = $this->draftbill->where('id',$request->draftbill_id);
+        $draftbilldata = [
+            'is_accepted' => $request->is_accepted,
+            'remarks' => $request->remarks,
+        ];
+        if($draftbill->update($draftbilldata)) {
+            Toastr()->success('Draft Bill Status Updated Successfully','Success');
+            return redirect()->route('draftbill.index');
+        }
     }
 }

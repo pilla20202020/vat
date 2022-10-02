@@ -2,6 +2,7 @@
 
 namespace App\Modules\Models\JobOrder;
 
+use App\Modules\Models\BillingAdvice\BillingAdvice;
 use App\Modules\Models\Customer\Customer;
 use App\Modules\Models\JobOrderDetail\JobOrderDetail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -27,6 +28,10 @@ class JobOrder extends Model
     public function orderDetails()
     {
         return $this->hasMany(JobOrderDetail::class,'joborder_id','id');
+    }
+
+    public function billingadvice() {
+        return $this->belongsTo(BillingAdvice::class,'id','joborder_id');
     }
 
     

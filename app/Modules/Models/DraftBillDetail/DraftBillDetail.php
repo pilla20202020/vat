@@ -16,6 +16,7 @@ class DraftBillDetail extends Model
         'component',
         'description',
         'price',
+        'taxable_type',
         'billed_for',
     ];
 }

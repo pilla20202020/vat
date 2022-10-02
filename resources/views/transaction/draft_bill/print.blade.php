@@ -27,42 +27,47 @@
                         </div>
                     </div>
                     <div class="row mt-5">
-                        <div class="col-lg-6 text-center">
-                            <h6>Invoice: {{$billingadvice->joborder->invoice}}</h6>
+                        <div class="col-lg-6 ">
+                            <h6>Billed To: {{$draftbill->bill_to}}</h6>
+                            <h6>Invoice: {{$draftbill->billingadvice->joborder->invoice}}</h6>
                         </div>
 
-                        <div class="col-lg-6 text-center">
-                            <h6>Billing Advice Date: {{$billingadvice->billing_advice_date}}</h6>
+                        <div class="col-lg-6 text-right">
+                            <h6>Address: {{$draftbill->address}}</h6>
+                            <h6>Draft Bill Date: {{$draftbill->draft_bill_date}}</h6>
                         </div>
                     </div>
 
-                    <div class="row mt-2 p-4">
+                    <h4 class="text-center mt-5"> Bill Details</h4>
+                    <div class="row mt-1 p-4 text-center">
                         <table class="table">
                             <thead>
                               <tr>
                                 <th scope="col">#</th>
                                 <th scope="col">Components</th>
-                                <th scope="col">Type</th>
                                 <th scope="col">Description</th>
+                                <th scope="col">Billed For</th>
+                                <th scope="col">Taxable Type</th>
                                 <th scope="col">Amount</th>
                               </tr>
                             </thead>
                             <tbody>
-                                @if(isset($billingadvice->joborder->orderDetails) && $billingadvice->joborder->orderDetails->isEmpty() == false)
-                                    @foreach ($billingadvice->joborder->orderDetails as $key => $detail)
+                                @if(isset($draftbill->draftDetails) && $draftbill->draftDetails->isEmpty() == false)
+                                    @foreach ($draftbill->draftDetails as $key => $detail)
                                         <tr>
                                             <th scope="row">{{++$key}}</th>
                                             <td>
-                                                @if($detail->type == "product")  {{$detail->product($detail->product_id)->name}} @else {{$detail->service($detail->product_id)->name}} @endif
+                                                {{ucfirst($detail->component)}}
                                             </td>
-                                            <td>{{ucfirst($detail->type)}}</td>
                                             <td>{{ucfirst($detail->description)}}</td>
+                                            <td>{{ucfirst($detail->billed_for)}}</td>
+                                            <td>{{ucfirst($detail->taxable_type)}}</td>
                                             <td>{{$detail->price}}</td>
                                         </tr>
                                     @endforeach
                                 @endif
                                 <tr class="bg-dark text-light">
-                                    <th colspan="3" class="border-0"></th>
+                                    <th colspan="4" class="border-0"></th>
                                     <td class="border-0 font-size-14"><b>Total</b></td>
                                     <td class="border-0 font-size-14"><b>Rs. {{$total_amount}}</b></td>
                                 </tr>

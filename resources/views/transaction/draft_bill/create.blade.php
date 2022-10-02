@@ -1,6 +1,6 @@
 @extends('layouts.admin.admin')
 
-@section('title', 'Generate a Billing Advice')
+@section('title', 'Generate a Draft Bill')
 
 @section('page-specific-styles')
     <link href="{{ asset('css/dropify.min.css') }}" rel="stylesheet">
@@ -14,7 +14,7 @@
             <form class="form form-validate floating-label" action="{{ route('draftbill.getbillingadvice') }}" method="GET"
                 enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
                         <div class="card">
                             <div class="card-underline">
                                 <div class="card-head">

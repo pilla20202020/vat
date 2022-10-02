@@ -12,22 +12,22 @@
             <i class="far fa-trash-alt"></i>
         </button>
 
-        {{-- @if($draftbill->is_accepted == "accepted")
-            <button data-billing_id="{{$billingadvice->id}}"  class="btn btn-danger btn-sm btn-reject" title="Reject">
+        @if($draftbill->is_accepted == "accepted")
+            <button data-draftbill_id="{{$draftbill->id}}"  class="btn btn-danger btn-sm btn-reject" title="Reject">
                 Reject
             </button>
         @elseif($draftbill->is_accepted == "rejected")
-            <button data-billing_id="{{$billingadvice->id}}"  class="btn btn-warning btn-sm btn-approve" title="Approve">
+            <button data-draftbill_id="{{$draftbill->id}}"  class="btn btn-warning btn-sm btn-approve" title="Approve">
                 Approve
             </button>
         @else 
-            <button data-billing_id="{{$draftbill->id}}"  class="btn btn-warning btn-sm btn-approve" title="Approve">
+            <button data-draftbill_id="{{$draftbill->id}}"  class="btn btn-warning btn-sm btn-approve" title="Approve">
                 Approve
             </button>
-            <button data-billing_id="{{$draftbill->id}}"  class="btn btn-danger btn-sm btn-reject" title="Reject">
+            <button data-draftbill_id="{{$draftbill->id}}"  class="btn btn-danger btn-sm btn-reject" title="Reject">
                 Reject
             </button>
-        @endif --}}
+        @endif
         
 
         

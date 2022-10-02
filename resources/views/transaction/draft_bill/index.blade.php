@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{{ asset('css/lightbox.css') }}"/>
 @endsection
 
-@section('title', 'Billing Advice List')
+@section('title', 'Draft Bill List')
 
 @section('content')
     <div class="row">
@@ -57,7 +57,7 @@
                 <div class="modal-body">
                     <form action="{{route('draftbill.updatestatus')}}" method="GET" class="form form-validate floating-label">
                         @csrf
-                        <input type="hidden" class="billing_id_status" value="" name="billing_id" id="">
+                        <input type="hidden" class="draftbill_id_status" value="" name="draftbill_id" id="">
                         <input type="hidden" value="accepted" name="is_accepted" id="">
                         <div class="row justify-content-center">
                             <div class="col-md-12 mt-2">
@@ -92,7 +92,7 @@
                 <div class="modal-body">
                     <form action="{{route('draftbill.updatestatus')}}" method="GET" class="form form-validate floating-label">
                         @csrf
-                        <input type="hidden" class="billing_id_status" value="" name="billing_id" id="">
+                        <input type="hidden" class="draftbill_id_status" value="" name="draftbill_id" id="">
                         <input type="hidden" value="rejected" name="is_accepted" id="">
                         <div class="row justify-content-center">
                             <div class="col-md-12 mt-2">
@@ -124,15 +124,15 @@
         });
 
         $(document).on('click', '.btn-approve', function() {
-            var billing_id = $(this).data('billing_id');
-            $(".billing_id_status").val(billing_id);
+            var draftbill_id = $(this).data('draftbill_id');
+            $(".draftbill_id_status").val(draftbill_id);
             $('.statusacceptmodal').modal('show');
         })
 
 
         $(document).on('click', '.btn-reject', function() {
-            var billing_id = $(this).data('billing_id');
-            $(".billing_id_status").val(billing_id);
+            var draftbill_id = $(this).data('draftbill_id');
+            $(".draftbill_id_status").val(draftbill_id);
             $('.statusrejectmodal').modal('show');
         })
 

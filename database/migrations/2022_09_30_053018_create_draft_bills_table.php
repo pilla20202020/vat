@@ -20,6 +20,7 @@ class CreateDraftBillsTable extends Migration
             $table->string('bill_to')->nullable();
             $table->string('address')->nullable();
             $table->string('draft_bill_date')->nullable();
+            $table->string('is_accepted')->default(null)->nullable();
             $table->string('display_order')->nullable();
             $table->string('remarks')->nullable();
             $table->enum('status',['active','in_active'])->nullable();

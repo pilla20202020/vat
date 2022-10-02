@@ -18,6 +18,7 @@ class CreateDraftBillDetailsTable extends Migration
             $table->bigInteger('draftbill_id')->unsigned()->index()->nullable();
             $table->string('component');
             $table->text('description')->nullable();
+            $table->string('taxable_type')->nullable();
             $table->string('price')->nullable();
             $table->string('billed_for')->nullable();
             $table->string('display_order')->nullable();

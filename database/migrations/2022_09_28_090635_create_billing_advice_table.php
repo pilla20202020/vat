@@ -18,6 +18,7 @@ class CreateBillingAdviceTable extends Migration
             $table->bigInteger('joborder_id')->unsigned()->index()->nullable();
             $table->string('billing_advice_date')->nullable();
             $table->foreign('joborder_id')->references('id')->on('tbl_job_orders')->onUpdate('cascade')->onDelete('cascade');
+            $table->boolean('is_draftbill')->default(null)->nullable();
             $table->string('display_order')->nullable();
             $table->string('remarks')->nullable();
             $table->enum('status',['active','in_active'])->nullable();

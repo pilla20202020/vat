@@ -10,14 +10,18 @@
         <a href="{{route('billingadvice.print', $billingadvice->id)}}" class="btn btn-flat btn-sm" title="print">
             <i class="fa fa-print"></i>
         </a>
-        <button type="button" class="btn btn-icon-toggle" onclick="deleteThis(this); return false;" link="{{ route('billingadvice.destroy', $billingadvice->id) }}">
-            <i class="far fa-trash-alt"></i>
-        </button>
-
-        @if($billingadvice->is_accepted == "accepted")
-            <button data-billing_id="{{$billingadvice->id}}"  class="btn btn-danger btn-sm btn-reject" title="Reject">
-                Reject
+        @if($billingadvice->draftbill == null)
+            <button type="button" class="btn btn-icon-toggle" onclick="deleteThis(this); return false;" link="{{ route('billingadvice.destroy', $billingadvice->id) }}">
+                <i class="far fa-trash-alt"></i>
             </button>
+        @endif
+
+        @if(($billingadvice->is_accepted == "accepted"))
+            @if($billingadvice->draftbill == null)
+                <button data-billing_id="{{$billingadvice->id}}"  class="btn btn-danger btn-sm btn-reject" title="Reject">
+                    Reject
+                </button>
+            @endif
         @elseif($billingadvice->is_accepted == "rejected")
             <button data-billing_id="{{$billingadvice->id}}"  class="btn btn-warning btn-sm btn-approve" title="Approve">
                 Approve

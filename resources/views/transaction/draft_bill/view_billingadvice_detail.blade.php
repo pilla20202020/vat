@@ -14,7 +14,7 @@
             <form class="form form-validate floating-label" action="{{ route('draftbill.getbillingadvice') }}" method="GET"
                 enctype="multipart/form-data">
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
                         <div class="card">
                             <div class="card-underline">
                                 <div class="card-head">
@@ -58,7 +58,7 @@
                 enctype="multipart/form-data">
                 @csrf
                 <div class="row">
-                    <div class="col-sm-9">
+                    <div class="col-sm-12">
                         <div class="card">
                             <div class="card-underline">
                                 <div class="card-body">
@@ -98,12 +98,12 @@
                                     <h5 class="pt-5">Bill Details</h5>
                                     <div id="additernary_edu">
                                         <div class="form-group row d-flex align-items-end">
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-2">
                                                 <label class="control-label">Components</label>
-                                                <input type="text"  name="component[]" value="" class="form-control change_status_commission">
+                                                <input type="text"  name="component[]" value="" class="form-control change_status_commission" required>
                                             </div>
 
-                                            <div class="col-sm-3">
+                                            <div class="col-sm-2">
                                                 <label class="control-label">Description</label>
                                                 <input type="text" name="description[]" class="form-control" required>
                                             </div>
@@ -111,12 +111,23 @@
                                             <div class="col-sm-3">
                                                 <label for="name" class="col-form-label pt-0">Billed For</label>
                                                 <select class="select2 mb-3 select2-multiple select_product" multiple style="width: 100%"
-                                                    data-placeholder="Billed For" name="billed_for0[]">    
+                                                    data-placeholder="Billed For" name="billed_for0[]" required>    
                                                     @foreach ($products as $product)
                                                         <option data-type="product" value="{{ $product->name }}">{{ $product->name }}
                                                         </option>
                                                     @endforeach
                                                 </select>            
+                                            </div>
+
+                                            <div class="col-md-2">
+                                                <label class="control-label">Amount Type</label>
+                                                <select class="form-control"
+                                                    style="width: 100%" data-placeholder="Choose Amount Type "
+                                                    name="taxable_type[]" required>
+                                                    <option value="" disabled selected> Select Amount Type</option>
+                                                    <option value="taxable" > Taxable Amount</option>
+                                                    <option value="non_taxable" > Non-Taxable Amount</option>
+                                                </select>
                                             </div>
                                         
                 
@@ -125,10 +136,10 @@
                                                 <input type="number" name="price[]" class="form-control" required value="{{$billingadvice->joborder->orderDetails->sum('price')}}">
                                             </div>
 
-                                            <div class="col-md-1" style="">
-                                                <input id="additemrowedu" type="button" class="btn btn-sm btn-primary mr-1"
-                                                    value="Add Row">
-                                            </div>
+                                        </div>
+                                        <div class="col-md-1" style="">
+                                            <input id="additemrowedu" type="button" class="btn btn-sm btn-primary mr-1"
+                                                value="Add Row">
                                         </div>
                                     </div>
 
@@ -139,7 +150,7 @@
                                                     <i class="md md-arrow-back"></i>
                                                     Back
                                                 </a>
-                                                <input type="submit" name="pageSubmit" class="btn btn-danger waves-effect waves-light" value="Generate Billing Advice">
+                                                <input type="submit" name="pageSubmit" class="btn btn-danger waves-effect waves-light" value="Generate Draft Bill">
                                             </div>
                                         </div>
                                     </div>
@@ -177,12 +188,12 @@
             $("#tempedu").val(b);
             var temp = $("#tempedu").val();
             var tst = `<div class="form-group row d-flex align-items-end appended-row-edu">
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="control-label">Components</label>
-                    <input type="text"  name="component[]" value="" class="form-control change_status_commission">
+                    <input type="text"  name="component[]" value="" class="form-control change_status_commission" required>
                 </div>
 
-                <div class="col-sm-3">
+                <div class="col-sm-2">
                     <label class="control-label">Description</label>
                     <input type="text" name="description[]" class="form-control" required>
                 </div>
@@ -190,12 +201,23 @@
                 <div class="col-sm-3">
                     <label for="name" class="col-form-label pt-0">Billed For</label>
                     <select class="select2 mb-3 select2-multiple select_product" multiple style="width: 100%"
-                        data-placeholder="Billed For" name="billed_for`+append+`[]" id="product_id`+append+`">    
+                        data-placeholder="Billed For" name="billed_for`+append+`[]" id="product_id`+append+`" required>    
                         @foreach ($products as $product)
                             <option data-type="product" value="{{ $product->name }}">{{ $product->name }}
                             </option>
                         @endforeach
                     </select>            
+                </div>
+
+                <div class="col-md-2">
+                    <label class="control-label">Amount Type</label>
+                    <select class="form-control"
+                        style="width: 100%" data-placeholder="Choose Amount Type "
+                        name="taxable_type[]" required>
+                        <option value="" disabled selected> Select Amount Type</option>
+                        <option value="taxable" > Taxable Amount</option>
+                        <option value="non_taxable" > Non-Taxable Amount</option>
+                    </select>
                 </div>
             
 

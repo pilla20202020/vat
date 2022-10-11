@@ -294,4 +294,25 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('updatestatus', 'DraftBill\DraftBillController@updateStatus')->name('updatestatus');
     });
 
+
+    /*
+    |--------------------------------------------------------------------------
+    | Issue Bill CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'issuebill.', 'prefix' => 'issuebill',], function () {
+        Route::get('', 'IssueBill\IssueBillController@index')->name('index');
+        Route::get('create', 'IssueBill\IssueBillController@create')->name('create');
+        Route::get('getdraftbill', 'IssueBill\IssueBillController@getDraftBill')->name('getdraftbill');
+        Route::post('', 'IssueBill\IssueBillController@store')->name('store');
+        Route::get('{issuebill}/edit', 'IssueBill\IssueBillController@edit')->name('edit');
+        Route::put('{issuebill}', 'IssueBill\IssueBillController@update')->name('update');
+        Route::get('issuebill/{id}/destroy', 'IssueBill\IssueBillController@destroy')->name('destroy');
+        Route::get('getjoborder', 'IssueBill\IssueBillController@getJobOrder')->name('getjoborder');
+        Route::get('/print/{id}', 'IssueBill\IssueBillController@print')->name('print');
+        Route::get('updatestatus', 'IssueBill\IssueBillController@updateStatus')->name('updatestatus');
+    });
+
 });

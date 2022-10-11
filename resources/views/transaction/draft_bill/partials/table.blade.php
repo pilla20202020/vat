@@ -8,9 +8,12 @@
         <a href="{{route('draftbill.print', $draftbill->id)}}" class="btn btn-flat btn-sm" title="print">
             <i class="fa fa-print"></i>
         </a>
-        <button type="button" class="btn btn-icon-toggle" onclick="deleteThis(this); return false;" link="{{ route('draftbill.destroy', $draftbill->id) }}">
-            <i class="far fa-trash-alt"></i>
-        </button>
+        @if($draftbill->is_issuebill == null)
+
+            <button type="button" class="btn btn-icon-toggle" onclick="deleteThis(this); return false;" link="{{ route('draftbill.destroy', $draftbill->id) }}">
+                <i class="far fa-trash-alt"></i>
+            </button>
+        @endif
 
         @if($draftbill->is_accepted == "accepted")
             <button data-draftbill_id="{{$draftbill->id}}"  class="btn btn-danger btn-sm btn-reject" title="Reject">

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\DraftBill;
+namespace App\Http\Controllers\IssueBill;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
@@ -9,17 +9,19 @@ use App\Modules\Models\BillingAdviceDetail\BillingAdviceDetail;
 use App\Modules\Models\Customer\Customer;
 use App\Modules\Models\DraftBill\DraftBill;
 use App\Modules\Models\DraftBillDetail\DraftBillDetail;
+use App\Modules\Models\IssueBill\IssueBill;
+use App\Modules\Models\IssueBillDetail\IssueBillDetail;
 use App\Modules\Models\JobOrder\JobOrder;
 use App\Modules\Models\JobOrderDetail\JobOrderDetail;
 use App\Modules\Models\Product\Product;
 use App\Modules\Models\Service\Service;
 use Illuminate\Support\Facades\DB;
 
-class DraftBillController extends Controller
+class IssueBillController extends Controller
 {
-    protected $customer, $product, $service, $joborder, $billingadvice, $billingadvicedetail, $draftbill;
+    protected $customer, $product, $service, $joborder, $billingadvice, $billingadvicedetail, $draftbill, $issuebill;
 
-    function __construct(Customer $customer, Product $product, Service $service, JobOrder $joborder, BillingAdvice $billingadvice, BillingAdviceDetail $billingadvicedetail, DraftBill $draftbill)
+    function __construct(Customer $customer, Product $product, Service $service, JobOrder $joborder, BillingAdvice $billingadvice, BillingAdviceDetail $billingadvicedetail, DraftBill $draftbill, IssueBill $issuebill)
     {
         $this->customer = $customer;
         $this->product = $product;
@@ -28,6 +30,7 @@ class DraftBillController extends Controller
         $this->billingadvice = $billingadvice;
         $this->billingadvicedetail = $billingadvicedetail;
         $this->draftbill = $draftbill;
+        $this->issuebill = $issuebill;
     }
     /**
      * Display a listing of the resource.
@@ -37,8 +40,8 @@ class DraftBillController extends Controller
     public function index()
     {
         //
-        $draftbills = $this->draftbill->get();
-        return view('transaction.draft_bill.index',compact('draftbills'));
+        $issuebills = $this->issuebill->get();
+        return view('transaction.issue_bill.index',compact('issuebills'));
     }
 
     /**
@@ -49,14 +52,15 @@ class DraftBillController extends Controller
     public function create()
     {
         //
-        $billingadvices = $this->billingadvice->where('is_accepted','accepted')->where('is_draftbill',null)->get();
-        return view('transaction.draft_bill.create',compact('billingadvices'));
+        $draftbills = $this->draftbill->where('is_accepted','accepted')->where('is_issuebill',null)->get();
+        return view('transaction.issue_bill.create',compact('draftbills'));
     }
 
-    public function getBillingAdvice(Request $request) {
-        $billingadvices = $this->billingadvice->where('is_accepted','accepted')->where('is_draftbill',null)->get();
-        $billingadvice = $this->billingadvice->where('id',$request->billingadvice_id)->first();
-        foreach ($billingadvice->joborder->orderDetails as $key => $detail) {
+
+    public function getDraftBill(Request $request) {
+        $draftbills = $this->draftbill->where('is_accepted','accepted')->where('is_issuebill',null)->get();
+        $draftbill = $this->draftbill->where('id',$request->draftbill_id)->first();
+        foreach ($draftbill->billingadvice->joborder->orderDetails as $key => $detail) {
             if($detail->type == "service")  {
                 $products[] = $detail->service($detail->product_id);
             } else {
@@ -65,7 +69,7 @@ class DraftBillController extends Controller
             
               
         }
-        return view('transaction.draft_bill.view_billingadvice_detail',compact('billingadvices','billingadvice','products'));
+        return view('transaction.issue_bill.view_draftbill_detail',compact('draftbills','draftbill','products'));
         
     }
 
@@ -85,40 +89,37 @@ class DraftBillController extends Controller
             //     $data['billed_for'] = $result->implode(',');
             // }
             $draftorder = DB::transaction(function () use ($data) {
-                $draftbilldata = [
-                    'billingadvice_id' => $data['billingadvice_id'],
+                $issuebilldata = [
+                    'draftbill_id' => $data['draftbill_id'],
                     'bill_to' => $data['bill_to'],
                     'address' => $data['address'],
-                    'draft_bill_date' => $data['draft_bill_date']
+                    'issue_bill_date' => $data['issue_bill_date']
                 ];
-                $createdraftbill = $this->draftbill->create($draftbilldata);
-                $billingadvice = $this->billingadvice->where('id',$data['billingadvice_id']);
-                $billingadviceData = [
-                    'is_draftbill' => 1,
+                $createissuebill = $this->issuebill->create($issuebilldata);
+                $draftbill = $this->draftbill->where('id',$data['draftbill_id']);
+                $draftbilldata = [
+                    'is_issuebill' => 1,
                 ];
-                $billingadvice->update($billingadviceData);
+                $draftbill->update($draftbilldata);
                 $p = 0;
                 foreach($data['component'] as $content) {   
-                    $orderDetails = new DraftBillDetail();
-                    $orderDetails['draftbill_id'] = $createdraftbill->id;
+                    $orderDetails = new IssueBillDetail();
+                    $orderDetails['issuebill_id'] = $createissuebill->id;
                     $orderDetails['component'] = $content;
                     $orderDetails['description'] = $data['description'][$p];
                     $orderDetails['taxable_type'] = $data['taxable_type'][$p];
                     $orderDetails['price'] = $data['price'][$p];
-                    if(isset($data['billed_for'.$p.''])) {
-                        $result = collect($data['billed_for'.$p.'']);
-                        $orderDetails['billed_for'] = $result->implode(',');
-                    }
+                    $orderDetails['billed_for'] = $data['billed_for'][$p];
                     $orderDetails->save();
                     $p = $p + 1;
                 }
             });
-            Toastr()->success('Draft Bill Generated Successfully','Success');
-            return redirect()->route('draftbill.index');
+            Toastr()->success('Bill Issued Successfully','Success');
+            return redirect()->route('issuebill.index');
         } catch(Exception $e) {
             return null;
         }
-        
+
     }
 
     /**
@@ -164,34 +165,39 @@ class DraftBillController extends Controller
     public function destroy($id)
     {
         //
-        $draftbill = $this->draftbill->where('id',$id);
-        $billingadvicedetail = $draftbill->first();
-        $billingadvice = $this->billingadvice->where('id',$billingadvicedetail->billingadvice_id);
-        $billAdviceData = [
-            'is_draftbill' => null,
+        $issuebill = $this->issuebill->where('id',$id);
+        $draftbilldetail = $issuebill->first();
+        $draftbill = $this->draftbill->where('id',$draftbilldetail->draftbill_id);
+        $draftbillData = [
+            'is_issuebill' => null,
         ];
-        $billingadvice->update($billAdviceData);
-        $draftbill->delete();
-        Toastr()->success('Draft Bill Deleted Successfully','Success');
-        return redirect()->route('draftsbill.index');
+        $draftbill->update($draftbillData);
+        $issuebill->delete();
+        Toastr()->success('Issue Bill Deleted Successfully','Success');
+        return redirect()->route('issuebill.index');
     }
 
     public function print($id) {
-        $draftbill = $this->draftbill->where('id',$id)->first();
-        $total_amount = $draftbill->draftDetails->sum('price');
-        return view('transaction.draft_bill.print',compact('draftbill','total_amount'));
+        $issuebill = $this->issuebill->where('id',$id)->first();
+        $updateissuebill = $this->issuebill->where('id',$id);
+        $issuebilldata = [
+            'is_printed' => 1,
+        ];
+        $updateissuebill->update($issuebilldata);
+        $total_amount = $issuebill->issueDetails->sum('price');
+        return view('transaction.issue_bill.print',compact('issuebill','total_amount'));
 
     }
 
     public function updateStatus(Request $request) {
-        $draftbill = $this->draftbill->where('id',$request->draftbill_id);
-        $draftbilldata = [
+        $issuebill = $this->issuebill->where('id',$request->issuebill_id);
+        $issuebilldata = [
             'is_accepted' => $request->is_accepted,
             'remarks' => $request->remarks,
         ];
-        if($draftbill->update($draftbilldata)) {
-            Toastr()->success('Draft Bill Status Updated Successfully','Success');
-            return redirect()->route('draftbill.index');
+        if($issuebill->update($issuebilldata)) {
+            Toastr()->success('Issue Bill Status Updated Successfully','Success');
+            return redirect()->route('issuebill.index');
         }
     }
 }

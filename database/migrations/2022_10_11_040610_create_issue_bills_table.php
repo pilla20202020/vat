@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateDraftBillsTable extends Migration
+class CreateIssueBillsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,17 +13,17 @@ class CreateDraftBillsTable extends Migration
      */
     public function up()
     {
-        Schema::create('tbl_draft_bills', function (Blueprint $table) {
+        Schema::create('tbl_issue_bills', function (Blueprint $table) {
             $table->id();
-            $table->bigInteger('billingadvice_id')->unsigned()->index();
-            $table->foreign('billingadvice_id')->references('id')->on('tbl_billing_advice')->onUpdate('cascade')->onDelete('cascade');
+            $table->bigInteger('draftbill_id')->unsigned()->index();
+            $table->foreign('draftbill_id')->references('id')->on('tbl_draft_bills')->onUpdate('cascade')->onDelete('cascade');
             $table->string('bill_to')->nullable();
             $table->string('address')->nullable();
-            $table->string('draft_bill_date')->nullable();
+            $table->string('issue_bill_date')->nullable();
             $table->string('is_accepted')->default(null)->nullable();
+            $table->string('is_printed')->default(null)->nullable();
             $table->string('display_order')->nullable();
             $table->string('remarks')->nullable();
-            $table->boolean('is_issuebill')->default(null)->nullable();
             $table->enum('status',['active','in_active'])->nullable();
             $table->bigInteger('created_by')->unsigned()->index()->nullable();
             $table->bigInteger('last_updated_by')->unsigned()->index()->nullable();
@@ -40,6 +40,6 @@ class CreateDraftBillsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('tbl_draft_bills');
+        Schema::dropIfExists('tbl_issue_bills');
     }
 }

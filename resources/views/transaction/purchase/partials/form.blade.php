@@ -61,9 +61,9 @@
                                 style="width: 100%" data-placeholder="Choose Urgency "
                                 name="urgency" required>
                                 <option value="" disabled selected> Select Urgency</option>
-                                <option value="asap" > ASAP</option>
-                                <option value="immediately" > Immediately</option>
-                                <option value="not_urgent" > Not Urgent</option>
+                                <option value="asap" @if(isset($purchase) && $purchase->urgency == "asap") selected @endif> ASAP</option>
+                                <option value="immediately" @if(isset($purchase) && $purchase->urgency == "immediately") selected @endif> Immediately</option>
+                                <option value="not_urgent" @if(isset($purchase) && $purchase->urgency == "not_urgent") selected @endif> Not Urgent</option>
                             </select>
                         </div>
 
@@ -71,21 +71,21 @@
                             <div class="form-group ">
                                 <label for="remarks" class="col-form-label pt-0">Remarks</label>
                                 <div class="">
-                                    <textarea name="remarks" id="" cols="100" rows="5"></textarea>
+                                    <textarea name="remarks" id="" cols="100" rows="5">@if(isset($purchase)) {{$purchase->remarks}} @endif</textarea>
                                 </div>
                             </div>
 
                         </div>
                     </div>
                     <hr>
-                    <h5>Select Product/Service</h5>
+                    <h5>Select Items To Purchase</h5>
                     <div id="additernary_edu">
-                        @if(isset($purchase->orderDetails) && $purchase->orderDetails->isEmpty() == false)
-                            @foreach ($purchase->orderDetails as $key => $detail)
+                        @if(isset($purchase->purchaseDetails) && $purchase->purchaseDetails->isEmpty() == false)
+                            @foreach ($purchase->purchaseDetails as $key => $detail)
                                 <input type="hidden" class="form-control" name="detail_id[{{ $key }}]" value={{ $detail->id }}>
                                 <div class="form-group row d-flex align-items-end">.
                                     <div class="col-sm-3">
-                                        <label for="name" class="col-form-label pt-0">Select Product/Services</label>
+                                        <label for="name" class="col-form-label pt-0">Select Item</label>
                                         <select class="select2 mb-3 select_product" style="width: 100%"
                                             data-placeholder="Choose" name="product_id[]">
                                             <optgroup label="Product">
@@ -113,17 +113,17 @@
 
 
                                     <div class="col-sm-3">
-                                        <label class="control-label">Description</label>
-                                        <input type="text" name="description[]" value="{{$detail->description}}" class="form-control" required>
+                                        <label class="control-label">Quantity</label>
+                                        <input type="text" name="quantity[]" value="{{$detail->quantity}}" class="form-control" required>
                                     </div>
 
                                     <div class="col-sm-2">
-                                        <label class="control-label">Amount</label>
+                                        <label class="control-label">Estimated Price</label>
                                         <input type="number" name="price[]" value="{{$detail->price}}" class="form-control" required>
                                     </div>
 
                                     <div class="col-md-1" style="margin-top: 45px;">
-                                        <a href="{{route('purchase.jobdetail_delete',$detail->id)}}" class="btn btn-sm btn-danger mr-1" type="submit" value="">Remove row</a>
+                                        <a href="{{route('purchase.purchasedetail_delete',$detail->id)}}" class="btn btn-sm btn-danger mr-1" type="submit" value="">Remove row</a>
                                     </div>
                                 </div>
                             @endforeach
@@ -171,7 +171,6 @@
                         </div>
                         @endif
                         
-
                         <div class="col-md-1" style="">
                             <input id="additemrowedu" type="button" class="btn btn-sm btn-primary mr-1"
                                 value="Add Row">
@@ -212,7 +211,7 @@
                             <div class="form-group ">
                                 <label for="name" class="col-form-label pt-0">Vendor Name</label>
                                 <div class="">
-                                    <input class="form-control store_vendorname" type="text" required value="" placeholder="Enter Vendor Name">
+                                    <input class="form-control store_vendorname" type="text" value="" placeholder="Enter Vendor Name">
                                 </div>
                             </div>
                         </div>
@@ -221,7 +220,7 @@
                             <div class="form-group ">
                                 <label for="name" class="col-form-label pt-0">Vendor Email</label>
                                 <div class="">
-                                    <input class="form-control store_vendoremail" type="email" required value="" placeholder="Enter Vendor Email">
+                                    <input class="form-control store_vendoremail" type="email" value="" placeholder="Enter Vendor Email">
                                 </div>
                             </div>
                         </div>
@@ -231,7 +230,7 @@
                             <div class="form-group ">
                                 <label for="name" class="col-form-label pt-0">Phone</label>
                                 <div class="">
-                                    <input class="form-control store_vendorphone" type="number" required value="" placeholder="Enter Vendor Phone">
+                                    <input class="form-control store_vendorphone" type="number" value="" placeholder="Enter Vendor Phone">
                                 </div>
                             </div>
                         </div>
@@ -316,7 +315,7 @@
             var temp = $("#tempedu").val();
             var tst = `<div class="form-group row d-flex align-items-end appended-row-edu">
                 <div class="col-sm-3">
-                    <label for="name" class="col-form-label pt-0">Select Product/Services</label>
+                    <label for="name" class="col-form-label pt-0">Select Item</label>
                     <select class="select2 mb-3 select2-multiple select_product" style="width: 100%"
                         data-placeholder="Choose Product" name="product_id[]" id="product_id`+append+`">
                         <option value="" disabled selected> Select Product</option>
@@ -343,15 +342,14 @@
                     <input type="text" readonly name="type[]" value="" class="form-control change_status_commission">
                 </div>
 
-                
 
                 <div class="col-sm-3">
-                    <label class="control-label">Description</label>
-                    <input type="text" name="description[]" class="form-control" required>
+                    <label class="control-label">Quantity</label>
+                    <input type="text" name="quantity[]" class="form-control" required>
                 </div>
 
                 <div class="col-sm-2">
-                    <label class="control-label">Amount</label>
+                    <label class="control-label">Estimated Price</label>
                     <input type="number" name="price[]" class="form-control" required>
                 </div>
 

@@ -332,7 +332,27 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('{purchase}/edit', 'Purchase\PurchaseController@edit')->name('edit');
         Route::put('{purchase}', 'Purchase\PurchaseController@update')->name('update');
         Route::get('purchase/{id}/destroy', 'Purchase\PurchaseController@destroy')->name('destroy');
-        Route::get('/{id}/delete-purchase-detail','Purchase\PurchaseController@deleteJobOrderDetailDelete')->name('jobdetail_delete');
+        Route::get('/{id}/delete-purchase-detail','Purchase\PurchaseController@deletePurchaseOrderDetails')->name('purchasedetail_delete');
+    });
+
+    /*
+    |--------------------------------------------------------------------------
+    | Receive Bill CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'receivebill.', 'prefix' => 'receivebill',], function () {
+        Route::get('', 'ReceiveBill\ReceiveBillController@index')->name('index');
+        Route::get('create', 'ReceiveBill\ReceiveBillController@create')->name('create');
+        Route::get('getreceivebill', 'ReceiveBill\ReceiveBillController@getReceiveBill')->name('getreceivebill');
+        Route::post('', 'ReceiveBill\ReceiveBillController@store')->name('store');
+        Route::get('{receivebill}/edit', 'ReceiveBill\ReceiveBillController@edit')->name('edit');
+        Route::put('{receivebill}', 'ReceiveBill\ReceiveBillController@update')->name('update');
+        Route::get('receivebill/{id}/destroy', 'ReceiveBill\ReceiveBillController@destroy')->name('destroy');
+        Route::get('getjoborder', 'ReceiveBill\ReceiveBillController@getJobOrder')->name('getjoborder');
+        Route::get('/print/{id}', 'ReceiveBill\ReceiveBillController@print')->name('print');
+        Route::get('updatestatus', 'ReceiveBill\ReceiveBillController@updateStatus')->name('updatestatus');
     });
 
 });

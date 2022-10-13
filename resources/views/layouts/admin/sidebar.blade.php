@@ -104,6 +104,7 @@
                     </a>
                     <ul class="sub-menu mm-collapse" aria-expanded="true">
                         <li><a href="{{ route('purchase.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Create P.O.</a></li>
+                        <li><a href="{{ route('receivebill.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Receive Bills</a></li>
                     
                     </ul>
                 </li>

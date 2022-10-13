@@ -103,10 +103,8 @@
                         <span>Transactions Purchase</span>
                     </a>
                     <ul class="sub-menu mm-collapse" aria-expanded="true">
-                        <li><a href="{{ route('joborder.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Job Orders</a></li>
-                        <li><a href="{{ route('billingadvice.index')}}" aria-expanded="false"><i class="fa fa-tasks"></i> Billing Advice</a></li>
-                        <li><a href="{{ route('draftbill.index')}}" aria-expanded="false"><i class="fa fa-lock"></i> Draft Bill</a></li>
-                        <li><a href="{{ route('issuebill.index')}}" aria-expanded="false"><i class="fa fa-lock"></i> Issue Bill</a></li>
+                        <li><a href="{{ route('purchase.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Create P.O.</a></li>
+                    
                     </ul>
                 </li>
 

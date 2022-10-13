@@ -108,4 +108,16 @@ class VendorController extends Controller
         Toastr()->success('Vendor Deleted Successfully','Success');
         return redirect()->route('vendors.index');
     }
+
+    public function vendorStore(VendorRequest $request) {
+        
+        if($vendor = $this->vendor->create($request->data())) {
+            $vendor = $this->vendor->get();
+            return response()->json([
+                'data' => $vendor,
+                'status' => true,
+                'message' => "Vendor Added Successfully."
+            ]);
+        }
+    }
 }

@@ -117,6 +117,8 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('{vendors}/edit', 'Vendor\VendorController@edit')->name('edit');
         Route::put('{vendors}', 'Vendor\VendorController@update')->name('update');
         Route::get('vendors/{id}/destroy', 'Vendor\VendorController@destroy')->name('destroy');
+        Route::post('vendorstore', 'Vendor\VendorController@vendorStore')->name('vendorStore');
+
     });
 
     /*
@@ -313,6 +315,24 @@ Route::group(['middleware' => 'auth','namespace' => 'App\Http\Controllers'], fun
         Route::get('getjoborder', 'IssueBill\IssueBillController@getJobOrder')->name('getjoborder');
         Route::get('/print/{id}', 'IssueBill\IssueBillController@print')->name('print');
         Route::get('updatestatus', 'IssueBill\IssueBillController@updateStatus')->name('updatestatus');
+    });
+
+
+    /*
+    |--------------------------------------------------------------------------
+    | Purchase CRUD
+    |--------------------------------------------------------------------------
+    |
+    */
+
+    Route::group(['as' => 'purchase.', 'prefix' => 'purchase',], function () {
+        Route::get('', 'Purchase\PurchaseController@index')->name('index');
+        Route::get('create', 'Purchase\PurchaseController@create')->name('create');
+        Route::post('', 'Purchase\PurchaseController@store')->name('store');
+        Route::get('{purchase}/edit', 'Purchase\PurchaseController@edit')->name('edit');
+        Route::put('{purchase}', 'Purchase\PurchaseController@update')->name('update');
+        Route::get('purchase/{id}/destroy', 'Purchase\PurchaseController@destroy')->name('destroy');
+        Route::get('/{id}/delete-purchase-detail','Purchase\PurchaseController@deleteJobOrderDetailDelete')->name('jobdetail_delete');
     });
 
 });

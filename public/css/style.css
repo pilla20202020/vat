@@ -34,3 +34,9 @@ div::-webkit-scrollbar-thumb {
     font-weight: 600;
 }
 
+
+.btn-addbutton {
+    color: #fff!important;
+    position: relative;
+    top: 2px;
+}

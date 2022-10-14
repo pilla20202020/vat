@@ -26,13 +26,14 @@
                             </div>
                         </div>
                     </div>
+                    <h2 class="text-center mt-5">Received Bill</h2>
                     <div class="row mt-5">
-                        <div class="col-lg-6 text-center">
-                            <h6>Invoice: {{$billingadvice->joborder->invoice}}</h6>
+                        <div class="col-lg-6 ">
+                            <h6>Invoice: {{$receivebill->invoice}}</h6>
                         </div>
 
-                        <div class="col-lg-6 text-center">
-                            <h6>Billing Advice Date: {{$billingadvice->billing_advice_date}}</h6>
+                        <div class="col-lg-6 text-right">
+                            <h6>Date: {{$receivebill->date}}</h6>
                         </div>
                     </div>
 
@@ -43,28 +44,42 @@
                                 <th scope="col">#</th>
                                 <th scope="col">Components</th>
                                 <th scope="col">Type</th>
-                                <th scope="col">Description</th>
+                                <th scope="col">Quantity</th>
+                                <th scope="col">Taxable Type</th>
                                 <th scope="col">Amount</th>
                               </tr>
                             </thead>
                             <tbody>
-                                @if(isset($billingadvice->joborder->orderDetails) && $billingadvice->joborder->orderDetails->isEmpty() == false)
-                                    @foreach ($billingadvice->joborder->orderDetails as $key => $detail)
+                                @if(isset($receivebill->receiveDetails) && $receivebill->receiveDetails->isEmpty() == false)
+                                    @foreach ($receivebill->receiveDetails as $key => $detail)
+                                    
                                         <tr>
                                             <th scope="row">{{++$key}}</th>
                                             <td>
                                                 @if($detail->type == "product")  {{$detail->product($detail->product_id)->name}} @else {{$detail->service($detail->product_id)->name}} @endif
                                             </td>
                                             <td>{{ucfirst($detail->type)}}</td>
-                                            <td>{{ucfirst($detail->description)}}</td>
+                                            <td>{{ucfirst($detail->quantity)}}</td>
+                                            <td>{{ucfirst($detail->taxable_type)}}</td>
                                             <td>{{$detail->price}}</td>
                                         </tr>
                                     @endforeach
                                 @endif
+                                <tr class="">
+                                    <th colspan="4" class="border-0"></th>
+                                    <td class="border-0 font-size-14"><b>Taxable Amount</b></td>
+                                    <td class="border-0 font-size-14"><b>Rs. {{$receivebill->taxable_total}}</b></td>
+                                </tr>
+
+                                <tr class="">
+                                    <th colspan="4" class="border-0"></th>
+                                    <td class="border-0 font-size-14"><b>Non-Taxable Amount</b></td>
+                                    <td class="border-0 font-size-14"><b>Rs. {{$receivebill->non_taxable_total}}</b></td>
+                                </tr>
                                 <tr class="bg-dark text-light">
-                                    <th colspan="3" class="border-0"></th>
-                                    <td class="border-0 font-size-14"><b>Total</b></td>
-                                    <td class="border-0 font-size-14"><b>Rs. {{$total_amount}}</b></td>
+                                    <th colspan="4" class="border-0"></th>
+                                    <td class="border-0 font-size-14"><b>Grand Total</b></td>
+                                    <td class="border-0 font-size-14"><b>Rs. {{$receivebill->grand_total}}</b></td>
                                 </tr>
                               
                               

@@ -162,21 +162,23 @@
                                                 <input type="text" name="quantity[]" class="form-control" required>
                                             </div>
 
+                                            <div class="col-md-2">
+                                                <label class="control-label">Amount Type</label>
+                                                <select class="form-control amount_type"
+                                                    style="width: 100%" data-placeholder="Choose Amount Type "
+                                                    name="taxable_type[]" required>
+                                                    <option value="" disabled selected> Select Amount Type</option>
+                                                    <option value="taxable" data-amount_type="taxable" > Taxable Amount</option>
+                                                    <option value="non_taxable" data-amount_type="non_taxable"> Non-Taxable Amount</option>
+                                                </select>
+                                            </div>
+
                                             <div class="col-sm-2">
                                                 <label class="control-label">Price</label>
                                                 <input type="number" name="price[]" class="form-control price" required>
                                             </div>
 
-                                            <div class="col-md-2">
-                                                <label class="control-label">Amount Type</label>
-                                                <select class="form-control"
-                                                    style="width: 100%" data-placeholder="Choose Amount Type "
-                                                    name="taxable_type[]" required>
-                                                    <option value="" disabled selected> Select Amount Type</option>
-                                                    <option value="taxable" > Taxable Amount</option>
-                                                    <option value="non_taxable" > Non-Taxable Amount</option>
-                                                </select>
-                                            </div>
+                                            
 
                                             <div class="col-md-1" style="">
                                                 <button id="additemrowedu" type="button" class="btn btn-sm btn-primary mr-1"
@@ -190,16 +192,22 @@
                                         
                                         <input type="hidden" id="tempedu" value="0" name="temp">
                                     </div>
+                                    <div class="row mt-3 mb-4">
+                                        <div class="offset-md-9 pl-5">
+                                            <input type="button" name="pageSubmit"
+                                                        class="bt btn-danger btn-sm btn-calculate" value="Calculate">
+                                        </div>
+                                    </div>
                                     <div class="row">
                                         <div class="offset-md-5">
                                             <h6 class="p-0">Total</h6>
                                         </div>
                                         <div class="col-md-3">
-                                            Non-Taxable Total : <input name="non_taxable_total" class="non_taxable_total">
+                                            Non-Taxable Total : <input name="non_taxable_total" class="non_taxable_total" readonly>
                                         </div>
 
                                         <div class="col-md-3">
-                                            Taxable Total : <input name="taxable_total" class="taxable_total">
+                                            Taxable Total : <input name="taxable_total" class="taxable_total" readonly>
                                         </div>
                                     </div>
 
@@ -208,19 +216,16 @@
                                             <h6 class="p-0">VAT</h6>
                                         </div>
                                         <div class="col-md-3">
-                                            <input name="vat" class="non_taxable_total">
-                                        </div>
-
-                                        
+                                            <input name="vat" class="vat" value="{{setting('vat')}}" readonly>
+                                        </div>                                        
                                     </div>
-
 
                                     <div class="row mt-4 ml-1">
                                         <div class="offset-md-5">
-                                            <h5 class="p-0">Grand Total:</h5>
+                                            <h6 class="p-0">Grand Total:</h6>
                                         </div>
                                         <div class="col-md-3">
-                                            <input name="grand_total" class="total">
+                                            <input name="grand_total" class="grand_total" readonly>
                                         </div>
 
                                         
@@ -233,7 +238,7 @@
                                                     <i class="md md-arrow-back"></i>
                                                     Back
                                                 </a>
-                                                <input type="submit" name="pageSubmit" class="btn btn-danger waves-effect waves-light" value="Submit">
+                                                <input type="submit" name="pageSubmit" class="btn btn-danger waves-effect waves-light btn-submit" value="Submit">
                                             </div>
                                         </div>
                                     </div>
@@ -307,12 +312,67 @@
     <script src="{{ asset('resources/js/libs/jquery-validation/dist/additional-methods.min.js') }}"></script>
     <script type="text/javascript">
 
-        $(document).on("change", ".price", function() {
-            var sum = 0;
-            $(".price").each(function(){
-                sum += +$(this).val();
+        $(document).on("click", ".btn-calculate", function() {
+            var taxable_sum = 0;
+            var non_taxable_sum = 0;
+            var amount_type = $(this).parent().prev().find('.amount_type').val();
+
+            $(".taxable_price").each(function(){
+                taxable_sum += +$(this).val();
             });
-            $(".total").val(sum);
+            $(".taxable_total").val(taxable_sum);
+            
+
+            $(".non_taxable_price").each(function(){
+                non_taxable_sum += +$(this).val();
+            });
+            $(".non_taxable_total").val(non_taxable_sum);
+
+            var non_taxable_total = $('.non_taxable_total').val();
+            var taxable_total = $('.taxable_total').val();
+            var vat = $('.vat').val();
+            var vat_amount = (vat * taxable_total ) / 100;
+            var vat_taxable_total = parseInt(vat_amount) + parseInt(taxable_total);
+            var grand_total = parseInt(non_taxable_total )+ parseInt(vat_taxable_total);
+            $(".grand_total").val(grand_total);
+        });
+
+        $(document).on("click", ".btn-submit", function() {
+            var taxable_sum = 0;
+            var non_taxable_sum = 0;
+            var amount_type = $(this).parent().prev().find('.amount_type').val();
+
+            $(".taxable_price").each(function(){
+                taxable_sum += +$(this).val();
+            });
+            $(".taxable_total").val(taxable_sum);
+            
+
+            $(".non_taxable_price").each(function(){
+                non_taxable_sum += +$(this).val();
+            });
+            $(".non_taxable_total").val(non_taxable_sum);
+
+            var non_taxable_total = $('.non_taxable_total').val();
+            var taxable_total = $('.taxable_total').val();
+            var vat = $('.vat').val();
+            var vat_amount = (vat * taxable_total ) / 100;
+            var vat_taxable_total = parseInt(vat_amount) + parseInt(taxable_total);
+            var grand_total = parseInt(non_taxable_total )+ parseInt(vat_taxable_total);
+            $(".grand_total").val(grand_total);
+        });
+
+        $(document).on('change','.amount_type',function(e){
+            var amount_type = $(this).find(':selected').data('amount_type');
+            if(amount_type == "taxable") {
+                $(this).parent().next().find('.price').addClass("taxable_price");
+                $(this).parent().next().find('.price').removeClass("non_taxable_price");
+            } else {
+                $(this).parent().next().find('.price').addClass("non_taxable_price");
+                $(this).parent().next().find('.price').removeClass("taxable_price");
+
+            }
+
         });
 
         $(document).ready(function () {
@@ -329,6 +389,9 @@
             $(this).parent().next().find('.change_status_commission').val(product_type);
             
         });
+        
+
+        
 
 
         $(document).on('click', '.btn-addbutton', function(e) {
@@ -409,21 +472,23 @@
                     <input type="text" name="quantity[]" class="form-control" required>
                 </div>
 
+                <div class="col-md-2">
+                    <label class="control-label">Amount Type</label>
+                    <select class="form-control amount_type"
+                        style="width: 100%" data-placeholder="Choose Amount Type "
+                        name="taxable_type[]" required>
+                        <option value="" disabled selected> Select Amount Type</option>
+                        <option value="taxable" data-amount_type="taxable"> Taxable Amount</option>
+                        <option value="non_taxable" data-amount_type="non_taxable"> Non-Taxable Amount</option>
+                    </select>
+                </div>
+
                 <div class="col-sm-2">
                     <label class="control-label">Price</label>
                     <input type="number" name="price[]" class="form-control price" required>
                 </div>
 
-                <div class="col-md-2">
-                    <label class="control-label">Amount Type</label>
-                    <select class="form-control"
-                        style="width: 100%" data-placeholder="Choose Amount Type "
-                        name="taxable_type[]" required>
-                        <option value="" disabled selected> Select Amount Type</option>
-                        <option value="taxable" > Taxable Amount</option>
-                        <option value="non_taxable" > Non-Taxable Amount</option>
-                    </select>
-                </div>
+                
 
 
                 <div class="col-md-1" style="margin-top: 45px;">

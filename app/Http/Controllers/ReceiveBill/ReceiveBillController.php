@@ -48,7 +48,7 @@ class ReceiveBillController extends Controller
     public function create()
     {
         //
-        $purchases = $this->purchase->get();
+        $purchases = $this->purchase->where('is_receivedbill',null)->get();
         return view('transaction.receive_bill.create',compact('purchases'));
 
     }
@@ -56,13 +56,13 @@ class ReceiveBillController extends Controller
     public function getReceiveBill(Request $request) {
 
         if($request->purchaseorder_id == "direct") {
-            $purchases = $this->purchase->get();
+            $purchases = $this->purchase->where('is_receivedbill',null)->get();
             $vendors = $this->vendor->get();
             $products = $this->product->get();
             $services = $this->service->get();
             return view('transaction.receive_bill.direct_purchase_order',compact('vendors','products','services','purchases'));
         } else {
-            $purchases = $this->purchase->get();
+            $purchases = $this->purchase->where('is_receivedbill',null)->get();
             $vendors = $this->vendor->get();
             $products = $this->product->get();
             $services = $this->service->get();
@@ -91,8 +91,18 @@ class ReceiveBillController extends Controller
                     'invoice' => $data['invoice'],
                     'date' => $data['date'],
                     'remarks' => $data['remarks'],
+                    'non_taxable_total' => $data['non_taxable_total'],
+                    'taxable_total' => $data['taxable_total'],
+                    'grand_total' => $data['grand_total'],
                 ];
                 $createReceiveBill = $this->receivebill->create($receivebillData);
+                if(isset($data['purchaseorder_id'])) {
+                    $purchase = $this->purchase->where('id', $data['purchaseorder_id']);
+                    $purchaseData = [
+                        'is_receivedbill' => 1,
+                    ];
+                    $purchase->update($purchaseData);
+                }
                 $p = 0;
                 foreach($data['product_id'] as $content) {
                     $orderDetails = new ReceiveBillDetail();
@@ -156,5 +166,23 @@ class ReceiveBillController extends Controller
     public function destroy($id)
     {
         //
+        $receivebill = $this->receivebill->where('id',$id);
+        $receivebilldetail = $receivebill->first();
+        if($receivebilldetail->purchaseorder_id != null) {
+            $purchaseorder = $this->purchase->where('id',$receivebilldetail->purchaseorder_id);
+            $purchaseorderData = [
+                'is_receivedbill' => null,
+            ];
+            $purchaseorder->update($purchaseorderData);
+        }
+        $receivebill->delete();
+        Toastr()->success('Received Bill Deleted Successfully','Success');
+        return redirect()->route('receivebill.index');
+    }
+
+    public function print($id) {
+        $receivebill = $this->receivebill->where('id',$id)->first();
+        return view('transaction.receive_bill.print',compact('receivebill'));
+
     }
 }

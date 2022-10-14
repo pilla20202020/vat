@@ -43,7 +43,7 @@
 
                 <li>
                     <a href="{{route('product-category.index')}}" class="waves-effect">
-                        <i class="fa fa-store"></i>
+                        <i class="fa fa-list-alt" aria-hidden="true"></i>
                         <span>Product Category</span>
                     </a>
                 </li>
@@ -57,28 +57,28 @@
 
                 <li>
                     <a href="{{route('service-category.index')}}" class="waves-effect">
-                        <i class="fa fa-store"></i>
+                        <i class="fa fa-list-alt" aria-hidden="true"></i>
                         <span>Service Category</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('service.index')}}" class="waves-effect">
-                        <i class="fa fa-store"></i>
+                        <i class="fa fa-wrench" aria-hidden="true"></i>
                         <span>Service</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('company.index')}}" class="waves-effect">
-                        <i class="fa fa-store"></i>
+                        <i class="fa fa-building" aria-hidden="true"></i>
                         <span>Company</span>
                     </a>
                 </li>
 
                 <li>
                     <a href="{{route('customer.index')}}" class="waves-effect">
-                        <i class="fa fa-store"></i>
+                        <i class="fa fa-user" aria-hidden="true"></i>
                         <span>Clients/Customer</span>
                     </a>
                 </li>
@@ -90,10 +90,10 @@
                         <span>Transactions Sales</span>
                     </a>
                     <ul class="sub-menu mm-collapse" aria-expanded="true">
-                        <li><a href="{{ route('joborder.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Job Orders</a></li>
-                        <li><a href="{{ route('billingadvice.index')}}" aria-expanded="false"><i class="fa fa-tasks"></i> Billing Advice</a></li>
-                        <li><a href="{{ route('draftbill.index')}}" aria-expanded="false"><i class="fa fa-lock"></i> Draft Bill</a></li>
-                        <li><a href="{{ route('issuebill.index')}}" aria-expanded="false"><i class="fa fa-lock"></i> Issue Bill</a></li>
+                        <li><a href="{{ route('joborder.index')}}" aria-expanded="false"><i class="fas fa-hand-point-right"></i> Job Orders</a></li>
+                        <li><a href="{{ route('billingadvice.index')}}" aria-expanded="false"><i class="fas fa-hand-point-right"></i> Billing Advice</a></li>
+                        <li><a href="{{ route('draftbill.index')}}" aria-expanded="false"><i class="fas fa-hand-point-right"></i> Draft Bill</a></li>
+                        <li><a href="{{ route('issuebill.index')}}" aria-expanded="false"><i class="fas fa-hand-point-right"></i> Issue Bill</a></li>
                     </ul>
                 </li>
 
@@ -103,8 +103,8 @@
                         <span>Transactions Purchase</span>
                     </a>
                     <ul class="sub-menu mm-collapse" aria-expanded="true">
-                        <li><a href="{{ route('purchase.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Create P.O.</a></li>
-                        <li><a href="{{ route('receivebill.index')}}" aria-expanded="false"><i class="fas fa-user"></i></i> Receive Bills</a></li>
+                        <li><a href="{{ route('purchase.index')}}" aria-expanded="false"><i class="fas fa-hand-point-right"></i>Create P.O.</a></li>
+                        <li><a href="{{ route('receivebill.index')}}" aria-expanded="false"><i class="fas fa-hand-point-right"></i> Receive Bills</a></li>
                     
                     </ul>
                 </li>

@@ -47,6 +47,11 @@
                                             {{ Form::textarea('setting[google_map]', old('setting.google_map') ?: setting('google_map'), ['class'=>'form-control','rows'=>2]) }}
                                         </div>
 
+                                        <div class="form-group">
+                                            {{ Form::label('setting[vat]', 'VAT') }}
+                                            {{ Form::text('setting[vat]', old('setting.vat') ?: setting('vat'), ['class'=>'form-control']) }}
+                                        </div>
+
 
                                         @if(setting('image'))
                                             <img id="holder" style="margin-top:15px;max-height:300px;" class="img img-fluid" src="{{setting('image')}}">
@@ -100,6 +105,7 @@
                                 </div>
                             </div>
                         </div>
+                        
                     </div>
                 </div>
                 <div class="col-sm-4">

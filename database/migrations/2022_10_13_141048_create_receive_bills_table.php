@@ -19,6 +19,9 @@ class CreateReceiveBillsTable extends Migration
             $table->bigInteger('purchaseorder_id')->unsigned()->index()->nullable();
             $table->string('invoice')->unique();
             $table->string('date')->nullable();
+            $table->string('non_taxable_total')->nullable();
+            $table->string('taxable_total')->nullable();
+            $table->string('grand_total')->nullable();
             $table->string('display_order')->nullable();
             $table->string('remarks')->nullable();
             $table->enum('status',['active','in_active'])->nullable();
